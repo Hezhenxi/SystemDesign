@@ -1,4 +1,4 @@
-# 系统设计与优化&amp;DDIA:see_no_evil:
+# 系统设计与优化&amp;DDIA :see_no_evil:
 ## 目录
 
 <a name="3060-1621846615933"></a><a name="uiay-1699845707467"></a>[一.数据库设计](#jeyl-1677787446995)
