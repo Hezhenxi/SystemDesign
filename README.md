@@ -657,7 +657,7 @@
 
 <a name="qobc-1704732605892"></a>**2.索引**
 
-<a name="zlg9-1704732609048"></a>**3.减少io/批量读**
+<a name="zlg9-1704732609048"></a>**3.减少io/批量读/非阻塞io**
 
 <a name="fpjd-1704732631316"></a>**4.减少多余数据加载/列式存储读**
 
@@ -917,13 +917,13 @@
 
 <a name="2gzz-1704980837071"></a>**.系统工程方法**
 
-|<a name="ufly-1704951943937"></a>系统工程方法|<a name="nxus-1704951943940"></a>关键点|
+|&emsp;<a name="ufly-1704951943937"></a>系统工程方法|&emsp;<a name="nxus-1704951943940"></a>关键点|
 | :- | :- |
-|<p><a name="1laj-1704951943944"></a>霍尔三维结构</p><p><a name="sxj8-1704951943946"></a>“硬科学”方法论</p>|<p><a name="lfis-1704951943949"></a>逻辑维:逻辑维即解决问题的逻辑过程。</p><p><a name="mbik-1704951943951"></a>时间维:时间维即是工作进程。</p><p><a name="6eif-1704951943953"></a>知识维:知识维即是专业科学知识。</p><p><a name="ujck-1704951943955"></a>应用场景:组织和管理大型工程建设项目</p>|
-|<p><a name="jrym-1704951943959"></a>切克兰德方法</p><p><a name="q8lv-1704951943961"></a>“软科学”方法论</p>|<p><a name="iypv-1704951943964"></a>核心不是“最优化”，而是“比较”和“探寻”</p><p><a name="ovv5-1704951943966"></a>7步骤:认识问题、根底定义、建立概念模型、比较及探寻、选择、设计与实│</p><p><a name="nbrk-1704951943968"></a>施、评估与反馈</p>|
-|<a name="klwq-1704951943972"></a>并行工程方法|<p><a name="lys5-1704951943975"></a>“制造过程”与“支持过程”并行</p><p><a name="fst8-1704951943977"></a>强调三个方面:产品设计开发期间，最快速度按质完成;各项工作问题协调解决;适当的信息系统工具。</p>|
-|<a name="prt1-1704951943981"></a>综合集成法|<p><a name="khme-1704951943984"></a>钱学森命名【简单系统】和【巨系统】</p><p><a name="t5z1-1704951943986"></a>四原则:整体论原则、相互联系原则、有序性原则、动态原则</p>|
-|<a name="6lvr-1704951943990"></a>wSR系统方法|<a name="1mrj-1704951943993"></a>实践准则:【懂物理】–【明事理】–【通人理】|
+|<p>&emsp;<a name="1laj-1704951943944"></a>霍尔三维结构</p><p>&emsp;<a name="sxj8-1704951943946"></a>“硬科学”方法论</p>|<p>&emsp;<a name="lfis-1704951943949"></a>逻辑维:逻辑维即解决问题的逻辑过程。</p><p>&emsp;<a name="mbik-1704951943951"></a>时间维:时间维即是工作进程。</p><p>&emsp;<a name="6eif-1704951943953"></a>知识维:知识维即是专业科学知识。</p><p>&emsp;<a name="ujck-1704951943955"></a>应用场景:组织和管理大型工程建设项目</p>|
+|<p>&emsp;<a name="jrym-1704951943959"></a>切克兰德方法</p><p>&emsp;<a name="q8lv-1704951943961"></a>“软科学”方法论</p>|<p>&emsp;<a name="iypv-1704951943964"></a>核心不是“最优化”，而是“比较”和“探寻”</p><p>&emsp;<a name="ovv5-1704951943966"></a>7步骤:认识问题、根底定义、建立概念模型、比较及探寻、选择、设计与实│</p><p>&emsp;<a name="nbrk-1704951943968"></a>施、评估与反馈</p>|
+|&emsp;<a name="klwq-1704951943972"></a>并行工程方法|<p>&emsp;<a name="lys5-1704951943975"></a>“制造过程”与“支持过程”并行</p><p>&emsp;<a name="fst8-1704951943977"></a>强调三个方面:产品设计开发期间，最快速度按质完成;各项工作问题协调解决;适当的信息系统工具。</p>|
+|&emsp;<a name="prt1-1704951943981"></a>综合集成法|<p>&emsp;<a name="khme-1704951943984"></a>钱学森命名【简单系统】和【巨系统】</p><p>&emsp;<a name="t5z1-1704951943986"></a>四原则:整体论原则、相互联系原则、有序性原则、动态原则</p>|
+|&emsp;<a name="6lvr-1704951943990"></a>wSR系统方法|&emsp;<a name="1mrj-1704951943993"></a>实践准则:【懂物理】–【明事理】–【通人理】|
 
 <a name="yvug-1704980841473"></a>时间维
 
@@ -1517,7 +1517,7 @@ SRS:
 
 ·保持模块的大小适中
 
-·多扇入，少扇出       模块A扇入3(高复用)，扇出2(高依赖)       1>A 2>A 3>A  A<4 A<5
+·多扇入，少扇出       模块A扇入3(高复用)，扇出2(高依赖)       1>A 2>A 3>A  A<4 A<5  -高扇入即A被多个函数调用，复用率高good; 高扇出A调用多个函数，系统复杂性不可预见性增加；
 
 <a name="upqt-1706095030525"></a>·深度和宽度均不宜过高
 
@@ -1813,7 +1813,7 @@ ARP:地址解析协议，IP地址转换为MAC地址
 
 不同点:             
 
-TCP -面向连接（连接管理)、三次握手、流量控制、差错校验和重传、IP数据报按序接收(不  丢失、不重复)、可靠性强、牺牲通信量、效率低                          
+TCP -面向连接（连接管理)、三次握手、流量控制-滑动窗口限流、差错校验和重传、IP数据报按序接收(不  丢失、不重复)、可靠性强、牺牲通信量、效率低                         
 
 UDP -不可靠、无连接、错误检测功能弱，无拥塞控制、无流量控制， 有助于提高传输的高速率性。
 
@@ -2223,8 +2223,220 @@ RFID的基本组成部分通常包括:标签、阅读器、天线。
 
 <a name="824i-1706275570096"></a>√基础设施即服务(laaS)   -硬件
 
+<a name="1rnn-1706941312871"></a>**===系统架构设计case===**
 
-<a name="8o0p-1706198496480"></a><a name="d0k5-1706094664386"></a><a name="sswx-1706094478181"></a>**===数据密集型应用===**
+<a name="nm5q-1706969255961"></a>**google L5设计一个分布式数据库架构**
+
+DESIGN-A DISTRIBUTED DATABASE
+
+RESOURCES:
+
+-taken ·from-somebody's real -google system-design-interview
+
+REQUIREMENTS:
+
+--distributed database
+
+-specify stuff like isolation- level, transactions support,consistency-level
+
+variations:
+
+\1) Read-heavy
+
+\2) write-heavy
+
+\3) Total ordering and heavy writes for ticketmaster/"flashsale"
+
+Most use cases are read-heavy
+
+\------
+
+snapshot isolation
+
+multi-version concurrency control 
+
+use-some- "version-vectors"?
+
+Does it·make sense to have a separate coordinator for all of the shards?-(Like ZooKeeper)
+
+or-does the: request - router - handle coordinating the-shards?
+
+\==========================
+
+write-heavy or read-heavy
+
+read-heavy
+
+B-tree
+
+single-leader
+
+DynamoDB/spanner style 
+
+snapshot isolation
+
+multi-version concurrency control
+
+use some "version vectors""?
+
+aim for sequential consistency
+
+write-heavy
+
+LSM-tree 
+
+leaderless
+
+cassandra/riak/scylla styled
+
+cosmos DB is also some inspiration  here
+
+probably still-snapshot isolation & multi-version concurrencycontrol
+
+( requestrouter stuff might be -different)
+
+just-aim for causal-consistency,
+
+and do risk & cosmos DB's write conflict resolution specifying thing
+
+ticketmaster/distributed linked list/"flash sale" oriented DBwrite-heavy and total ordering is important)
+
+meaning aim for sequential consistency
+
+BUT,we're super write-heavy
+
+single-leader
+
+LSM-tree
+
+
+<a name="fug2-1707454709063"></a>request router is likely going to stay looking like theread-heavy approach
+
+<a name="g7yu-1707229908505"></a>**.what is total ordering(ordering first 100 custormer)**
+
+Can- you explain -whats total ordering use case briefly?
+
+ordering all the records of the database, for example: flashsales on amazon.com  - first 100 customers will be luckers to get free iphone;  
+
+fairness"
+
+I am going to be using  "weak fairness"
+
+which is the difference between"sequential consistency" and"linearizability - seattle to your IDC 100km, be later 5 sec than others which approach your IDC;
+
+there's actually multiple there.jepsen.io/consistency
+
+------by the way----
+
+distributed system node serizability rank
+
+https://jepsen.io/consistency  
+
+when network down
+
+Total Available
+
+Sticky Available
+
+<a name="qzxn-1707454693080"></a>Unavailable
+
+<a name="ebxf-1707230056989"></a>**.why single leader()**
+
+why single-leader?
+
+simplifies write conflicts
+
+concurrent-writes are imposssible when PostgreSQL is set to serializable-isolation-level
+
+zookeeper -and- etcd or-strongly consistent- KV storesetcd is used by kubernetes internally
+
+<a name="llq0-1707455190492"></a>aim for sequential consistency
+
+<a name="ttmg-1707230034624"></a>**.request router**
+
+\- my opinion is that it is likely mycat;
+
+"request router"
+
+`             `strong consistent kv store(cassadra)
+
+`                             `|
+
+client   -        "request router"    -    (partion1) postgreSQL shard(leader node)  -  sychronus read raplica(follower) -gossinping  read raplic
+
+`                                                `|
+
+`                                           `(partion2) postreSQL shard(leader)     
+
+
+
+Strong Read Consistency  :  do request to leader, leader will expi
+
+<a name="tuet-1707455232935"></a>Eventual Consistyency  : do request to  raplica
+
+<a name="aftd-1707229925082"></a>**.variations**
+
+<a name="uk2k-1707457488655"></a>**1.Failover handing**
+
+<a name="btbd-1707457496651"></a>**2.Reblancing after new node added**
+
+<a name="moaq-1707457524278"></a>**3.Leaderless for heavy write-shard**
+
+<a name="wyvq-1707458882987"></a>**4.TicketMasler (and total ordering is necessary**
+
+variations 1-Failover handling
+
+1\.detect the failur
+
+`    `From "Database leader->"phi accruar
+
+2\.do the leader election and switch over to the new leader
+
+1\.detect the failur
+
+2\.prmote The syrchronous read replica(this is our leader election we're doing the 'ring') in the kv store
+
+variation 1 reblancing after new node added
+
+1\.start gossiping data over to the new machines
+
+2\.the machines become sychronuse read replica 
+
+`    `for the partition that they should be promoted to 'leader' of
+
+3\.promotes one of the machines to 'leader' (in kv store)
+
+4\.it is now being router write request;
+
+variation 2 leaderless for heavy write (No total ordering support only causal consistency)
+
+write scenario: wirte to machine 1 ,machine 2
+
+`    `gossiping -> concurrent write is detected!! now we have to do a write conflict resolution
+
+`    `under Last-Write-Win. you just take the write from machine 2 . and that becomes the value on both machines(cassandre dose this)
+
+`    `with  cosmosDB and (IIRC) Riak, you can specify the conflict resolution strategy instead of the defualt of LWW
+
+
+
+FOR-THIS-SCENARIO,
+
+basically just follow Variation· 1, but-shard the hell out of.it( fewer read: replicas necessary)
+
+and use· LSM-trees
+
+and - use the serializable isolation level on each leader node
+
+Variation 3-TicketMasler (and total ordering is necessary)->just copy variation 1 but with tollowing changes
+
+-use LSMM-trees
+
+\- fewer read replicas necessary- shard the hell out of it
+
+<a name="m8yp-1706969251706"></a>- seriazation isolation level
+
+<a name="sswx-1706094478181"></a>**===数据密集型应用===**
 
 <a name="ef5t-1644230945318"></a>数据系统基础
 
@@ -2260,6 +2472,16 @@ RFID的基本组成部分通常包括:标签、阅读器、天线。
 
 <a name="bynr-1644228470161"></a>在可扩展的系统中可以添加**处理容量** 以在高负载下保持可靠。
 
+推特2012年11月发布的数据，主要两个业务：
+
+发布推文：
+
+`    `用户可以向粉丝发布新消息（平均4.6k 请求/秒 ， 峰值超12k 请求/ 秒） TPS
+
+主页时间线：
+
+<a name="mnug-1708269817280"></a>    用户可以查阅他们关注的人发布的推文（300K 请求每秒） 
+
 <a name="elzq-1644228563046"></a>**.可维护性：**   
 
 <a name="vg1v-1699843968229"></a>可维护性实质上是关于工程师和运维团队生活质量的。
@@ -2282,7 +2504,7 @@ RFID的基本组成部分通常包括:标签、阅读器、天线。
 
 <a name="uzbw-1699844301003"></a>**通常**不会为存储的数据强制一个模式，这可以使应用程序更容易适应不断变化的需求。
 
-<a name="0p23-1644410807294"></a>**1.文档数据库：**
+<a name="0p23-1644410807294"></a>**1.文档数据库:MongoDB**
 
 <a name="9rlb-1699844336493"></a>数据通常是自我包含的，而且文档之间的关系非常稀少
 
@@ -2440,7 +2662,7 @@ OLAP TB,PB级别的数据(几百列)情况下，索引的相关性就会下降�
 
 <a name="sgmj-1646311002454"></a>我们讨论了一些有助于决定应用程序在复制滞后时的行为的
 
-<a name="nlnz-1699845075606"></a>**-一致性模型：**
+<a name="nlnz-1699845075606"></a>**-一致性模型：<https://jepsen.io/consistency>**
 
 <a name="anqq-1646312272172"></a>**1.写后读**
 
