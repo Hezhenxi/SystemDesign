@@ -577,7 +577,7 @@
 
 <a name="kdpj-1738421050431"></a>恒大：各系统各自命名，对账时需要做转换层数据映射。
 
-<a name="cdso-1677787447000"></a>**二.系统优化**
+<a name="cdso-1677787447000"></a>**二.系统优化(确定性能瓶颈)**
 
 <a name="3qep-1642647362896"></a>**应用整体的优化**
 
@@ -585,111 +585,147 @@
 
 <a name="ovup-1704437622969"></a>**1.多线程和并发编程**
 
+<a name="zobc-1740483061607"></a>多线程和并发编程：多线程和并发重复利用多核CPU,
+
+<a name="94ma-1740483068056"></a>利用线程池管理复用线程，避免创建和销毁线程昂贵开销。
+
 <a name="ufpl-1704437634986"></a>**2.JNI** 
+
+<a name="0scv-1740483072837"></a>JNI: C本地代码调度CPU
 
 <a name="ixb5-1704437634987"></a>**3.JIT/AOT编译**
 
+<a name="63cu-1740483078302"></a>JIT/AOT编译：JVM 和 JIT 足够时间来优化热点代码 
+
+<a name="4zum-1740483084146"></a>/云原生native Graavm ahead of time(AOT)静态编译
+
 <a name="kr1f-1704437634988"></a>**4.算法优化**
 
-1\.多线程和并发编程：多线程和并发重复利用多核CPU,利用线程池管理复用线程，避免创建和销毁线程昂贵开销。
+<a name="slhp-1740483093548"></a>算法优化：优化关键算法和数据结构，确保CPU执行效率
 
-2\.JNI: C本地代码调度CPU
-
-3\.JIT/AOT编译：JVM 和 JIT 足够时间来优化热点代码 / 云原生native Graavm ahead of time(AOT)静态编译
-
-<a name="pojo-1704436320217"></a>4.算法优化：优化关键算法和数据结构，确保CPU执行效率
+<a name="xkl2-1740483095348"></a>减少内存数据I/O，减少时间复杂度
 
 <a name="1xur-1642647384168"></a>**-内存RAM（GB）/高速缓存(KB) -> 微秒级别(分级缓存)**
 
+<a name="86ib-1740483177750"></a>(空间换时间)
+
 <a name="7hi9-1704437851514"></a>**1.JVM内存管理**
+
+<a name="qa3x-1740483184540"></a>JVM内存管理：设置合理的堆大小及垃圾回收策略。
 
 <a name="te7c-1704437851799"></a>**2.缓存**
 
+<a name="3ilp-1740483190811"></a>缓存：redis缓存，spring缓存，ORM缓存
+
 <a name="bqty-1704437851800"></a>**3.消息中间件**
 
-(空间换时间)
-
-1\.JVM内存管理：设置合理的堆大小及垃圾回收策略。
-
-2\.缓存：redis缓存，spring缓存，ORM缓存
-
-<a name="pxxu-1704436648342"></a>3.消息中间件：异步写，提高并发写能力。-吞吐量
+<a name="pd4d-1740483196479"></a>消息中间件：异步写，提高并发写能力。-吞吐量
 
 <a name="ziti-1642647439005"></a>**-磁盘（TB）-> 毫秒级别(减少io次数,减少随机io-redolog)**
 
 <a name="zups-1704437900079"></a>**1.减少磁盘io**
 
-<a name="u3ok-1704438035018"></a>**2.数据压缩**   
+<a name="vm4s-1740483210604"></a> 异步io,
 
-1\.减少io(磁盘读写): 异步io,sql索引,局部性原理加载相邻页数据 ,DB数据磁盘预读----数据存储一般在DB系统中
+<a name="weay-1740483220262"></a>sql索引,
 
-<a name="ayss-1704436737847"></a>2.数据压缩：对需要存储或传输的数据进行压缩，减少磁盘占用
+<a name="x3tk-1740483222527"></a>局部性原理加载相邻页数据 ,DB数据磁盘预读----数据存储一般在DB系统中
+
+<a name="u3ok-1704438035018"></a>**2.数据压缩**
+
+<a name="benj-1740483240437"></a>数据压缩：对需要存储或传输的数据进行压缩，减少磁盘占用
+
+<a name="winb-1740481345218"></a>**3.顺序I/O , 减少随机I/O**
+
+<a name="uks9-1740481384608"></a>顺序I/O吞吐量大，读写快，局部性原理（磁盘预读）
+
+<a name="vjda-1740481226218"></a>随机I/O性能差 
+
+<a name="4yll-1740481461465"></a>**4.redolog WAL 预写式日志**
+
+<a name="mrka-1740481484549"></a>崩溃恢复  
+
+<a name="lond-1740481494722"></a>日志结构存储，尾追加，顺序I/O
 
 <a name="irbp-1642647458856"></a>**-网络传输/系统交互 -> 秒级 (减少io，连接池化)** 
 
 <a name="6qil-1704438276193"></a>**1.减少网络请求**   
 
+<a name="yok3-1740483300686"></a>减少网络请求：
+
+<a name="bdpj-1740483305021"></a>减少io(系统交互/连接池连接数)：
+
+<a name="lmkt-1740483307562"></a>去除for循环sql 
+
+<a name="49rh-1740483300943"></a>  池化思想，创建和销毁消耗大的资源创建一个资源池，维护一定数量的资源数，统一管理资源创建和销毁
+
 <a name="p5dt-1704438283633"></a>**2.使用CDN**
 
-<a name="zhp8-1704438283634"></a>**3.Sockets异步通信**                                      
+<a name="ywc4-1740483331778"></a>使用CDN: 对于静态资源，使用内容分发网络（CDN）来加速资源的加载。
 
-1\.减少网络请求：减少io(系统交互/连接池连接数)：去除for循环sql 
+<a name="zhp8-1704438283634"></a>**3.Sockets异步通信**           
 
-`    `--池化思想，创建和销毁消耗大的资源创建一个资源池，维护一定数量的资源数，统一管理资源创建和销毁
-
-2\.使用CDN: 对于静态资源，使用内容分发网络（CDN）来加速资源的加载。
-
-<a name="85si-1704436765735"></a>3.Sockets异步通信：对于需要等待的网络通信，可以考虑使用异步方式。
+<a name="zfor-1740483336259"></a>    Sockets异步通信：对于需要等待的网络通信，可以考虑使用异步方式。      
 
 <a name="3l0l-1704424353262"></a>**项目架构层面的优化**
 
 <a name="8o8s-1704424396933"></a>**-多级缓存**
 
-亿级流量-多级缓存
+<a name="b9kb-1740484357026"></a>亿级流量-多级缓存
 
-<a name="lm7b-1704438499917"></a>浏览器(客户端缓存) -> Nginx反向代理(本地缓存) -> Redis(缓存) -> Tomcat(进程缓存) -> 应用(缓存、mybatis一二级缓存) -> DB(缓存)
+<a name="5bye-1740484357272"></a>浏览器(客户端缓存) -> Nginx反向代理(本地缓存) -> Redis(缓存) -> Tomcat(进程缓存) -> 应用(缓存、mybatis一二级缓存) -> DB(缓存)
 
 <a name="trcg-1704438366333"></a>**-应用层**
 
 <a name="68oa-1704438530062"></a>**.代码优化**
 
+<a name="zbh8-1740484388364"></a>通过代码审查，code review, 自动化审查工具
+
+<a name="qifo-1740484397662"></a>性能分析工具来识别和优化慢速或低效的代码。
+
 <a name="clmf-1704438530257"></a>**.数据库优化**
+
+<a name="dqal-1740484454902"></a>使用索引
+
+<a name="s1gs-1740484460958"></a>合理的查询语句
+
+<a name="klhm-1740484468683"></a>数据库连接池配置
+
+<a name="irfn-1740484482223"></a>合理的设计，非范式，冗余字段减少连接操作
 
 <a name="md03-1704438530259"></a>**.日志优化**
 
-·代码优化:通过代码审查和性能分析工具来识别和优化慢速或低效的代码。
+<a name="kfbq-1740484588418"></a>避免过度记录日志，尽量异步记录
 
-·数据库优化:对于数据库访问，使用索引、合理的查询语句，以及数据库连接池等来提高性能。
-
-<a name="8o0m-1704438517387"></a>·日志优化:避免过度记录日志，尽量异步记录，或者使用日志级别进行动态调整。
+<a name="rzq8-1740484594233"></a>日志级别进行动态调整
 
 <a name="ocux-1704438477879"></a>**-监控与调优**
 
 <a name="vdq2-1704438556836"></a>**.性能监控：**
 
+<a name="7pdi-1740484606910"></a>ELK:实时监测应用程序的性能,使用性能监控工具，例如Java Mission Control、VisualVM，
+
 <a name="t29d-1704438557094"></a>**.分析和调优**
 
-·性能监控:使用性能监控工具，例如Java Mission Control、VisualVM等，来实时监测应用程序的性能。
-
-<a name="l3kg-1704437252457"></a>·分析和调优:根据监控结果，进行分析并进行调优，优化性能瓶颈。
+<a name="7zlr-1740484631942"></a>根据监控结果，进行分析并进行调优，优化性能瓶颈。
 
 <a name="ukjf-1704424419442"></a>**-分布式系统架构**
 
 <a name="a0bx-1704438677201"></a> **.负载均衡**
 
+<a name="bwvg-1740484805719"></a>确保各个节点的负载均匀
+
+<a name="727x-1740484789606"></a>浏览器(客户端缓存) -> Nginx反向代理(本地缓存) -> Redis(缓存) -> Tomcat(进程缓存) -> 应用(缓存、mybatis一二级缓存) -> DB(缓存)
+
+<a name="7x5v-1740484789854"></a>                CDN                  SLB负载均衡        分布式缓存          异步通信、MQ异步写/并发写、容错降级
+
 <a name="xn9x-1704438687994"></a>**.分布式缓存**
+
+<a name="ayt3-1740484895016"></a>使用分布式缓存来减轻数据库负担，提高数据读取速度
 
 <a name="zcdp-1704438687996"></a>**.服务降级和容错**
 
-浏览器(客户端缓存) -> Nginx反向代理(本地缓存) -> Redis(缓存) -> Tomcat(进程缓存) -> 应用(缓存、mybatis一二级缓存) -> DB(缓存)
-
-`                `CDN                  SLB负载均衡        分布式缓存          异步通信、MQ异步写/并发写、容错降级
-
-·负载均衡:对于分布式系统，使用负载均衡来分配请求，以确保各个节点的负载均匀。
-
-·分布式缓存:使用分布式缓存来减轻数据库负担，提高数据读取速度。
-
-<a name="xpee-1704438657125"></a>·服务降级和容错:实现服务降级和容错机制，以应对网络或服务不稳定的情况。
+<a name="2vng-1740484909509"></a>实现服务降级和容错机制，以应对网络或服务不稳定的情况。
 
 <a name="six7-1642647372926"></a>**读写层面**
 
@@ -707,33 +743,29 @@
 
 <a name="6jmb-1704732509150"></a>**1.异步写**
 
+<a name="gxbi-1740485220838"></a>使用异步写入的方式，将写操作放入消息队列或缓冲区中，由专门的线程异步处理。这样可以将写操作与主程序解耦，提高响应速度，并将写入操作批量化。
+
 <a name="tkwp-1704732723564"></a>**2.并发写**
 
 <a name="hewz-1704732862030"></a>**3.批量写**
 
+<a name="zb1a-1740484957235"></a>将多个写操作合并为批量操作，减少与数据库或其他外部存储的交互次数。例如，使用批量插入、批量更新或批量删除等操作，以减少单个写操作的开销。
+
+<a name="nbjs-1740484969437"></a>对于关系型数据库，可以考虑优化数据库的配置和索引，以提高写入性能
+
+<a name="v12k-1740485087229"></a>使用合适的数据库引擎和事务隔离级别，并优化查询和写入语句的性能。
+
 <a name="ccd8-1704732727854"></a>**4.优化算法和数据结构**
+
+<a name="b5gs-1740485174346"></a>如果数据量较大，可以考虑将数据分片存储，将数据分散到多个存储节点上。这样可以将写入操作分散到多个节点上并行处理，以提高写入性能和扩展性。
 
 <a name="eqd9-1704732736281"></a>**5.缓存写**
 
+<a name="mwbg-1740485109335"></a>使用缓存来减少对数据库的直接访问。并通过批量或定期更新将数据同步到持久化存储。
+
 <a name="hyq8-1704732768916"></a>**6.非阻塞io**
 
-1\.批量操作:将多个写操作合并为批量操作，减少与数据库或其他外部存储的交互次数。例如，使用批量插入、批量更新或批量删除等操作，以减少单个写操作的开销。2.异步写入:使用异步写入的方式，将写操作放入队列或缓冲区中，由专门的线程异步处理。这样可以将写操作与主程序解耦，提高响应速度，并将写入操作批量化。
-
-3\.数据库优化:对于关系型数据库，可以考虑优化数据库的配置和索引，以提高写入性
-
-能。使用合适的数据库引擎和事务隔离级别，并优化查询和写入语句的性能。
-
-4\.使用缓存:对于频繁的写入操作，可以使用缓存来减少对数据库的直接访问。将数据写入缓存，并通过批量或定期更新将数据同步到持久化存储。
-
-5\.数据结构优化:选择合适的数据结构来存储数据，以提高写入性能。例如，使用哈希表、跳表等高效的数据结构来支持快速插入和更新操作。
-
-6\.并发处理:使用多线程或分布式处理来并行处理写入操作，以提高写入性能。使用线程池或任务调度器来管理并发写入任务，并确保线程安全和数据─致性。
-
-7\.使用非阻塞IO:对于高并发的写入操作，可以使用非阻塞IO技术，如NIO (New lO)或Netty等，以提高写入性能和吞吐量。
-
-8\.数据分片:如果数据量较大，可以考虑将数据分片存储，将数据分散到多个存储节点上。这样可以将写入操作分散到多个节点上并行处理，以提高写入性能和扩展性。9.写缓冲:使用写缓冲区来缓存写入的数据，减少对物理存储设备的实时写入。通过批
-
-<a name="z4ya-1704738513279"></a>量或异步的方式将缓冲区的数据定期写入存储设备，以提高写入性能。
+<a name="cykh-1740485139367"></a>使用非阻塞IO技术，如NIO (New lO)或Netty等，以提高写入性能和吞吐量。
 
 <a name="tncv-1677787447001"></a>**1.分控系统优化复盘**
 
@@ -801,143 +833,141 @@
 
 <a name="8ien-1704757782146"></a>**1.满足大规模用户同时访问，提供良好响应时间和性能**
 
+<a name="8ije-1740486049042"></a>随着互联网的普及，用户访问量可能会在短时间内急剧增加。高并发系统设计可以确保系统在面对大规模用户同时访问时能够提供良好的响应时间和性能
+
 <a name="xy0g-1704757785190"></a>**2.设计之初就要考虑伸缩性和容错性是非常重要的**
+
+<a name="dpst-1740486066472"></a>高并发系统的设计是一个复杂而动态的过程，需要根据业务需求和系统特点不断优化。在设计之初就考虑到系统的可伸缩性和容错性是非常重要的。
 
 <a name="wr12-1704947861599"></a>**.垂直伸缩** 
 
+<a name="hd2g-1740486083884"></a>垂直伸缩
+
+<a name="bvmg-1740486084234"></a>  +配置32核CPU +124GB内存 +500G硬盘
+
+<a name="gfyh-1740486084235"></a>优点；方案简单，易理解操作
+
+<a name="cbgz-1740486084236"></a>缺点：容易达到机器物理上限，不具备高可用能力，单点故障高。
+
 <a name="bizh-1704947959744"></a>**.水平伸缩**
 
-·随着互联网的普及，用户访问量可能会在短时间内急剧增加。高并发系统设计可以确保系统在面对大规模用户同时访问时能够提供良好的响应时间和性能。
-
-.高并发系统的设计是一个复杂而动态的过程，需要根据业务需求和系统特点不断优化。在设计之初就考虑到系统的可伸缩性和容错性是非常重要的。
-
-` `垂直伸缩
-
-`  `+配置32核CPU +124GB内存 +500G硬盘
-
-优点；方案简单，易理解操作
-
-缺点：容易达到机器物理上限，不具备高可用能力，单点故障高。
-
-水平伸缩
-
-<a name="4kjn-1704757525367"></a>多实例高可用，无需高性能服务器也可进行伸缩。
+<a name="ftmm-1740486091810"></a>多实例高可用，无需高性能服务器也可进行伸缩。
 
 <a name="fvzi-1704756770858"></a>**1.分布式架构**
 
 <a name="ywzr-1704756872033"></a>**.微服务架构**
 
+<a name="rt5u-1740486106881"></a>使用微服务拆分系统，将系统拆分成多个小而独立的服务，每个服务专注于特定的业务功能。
+
 <a name="xgna-1704756877646"></a>**.分布式计算**
 
-·微服务架构:使用微服务拆分系统，将系统拆分成多个小而独立的服务，每个服务专注于特定的业务功能。
-
-<a name="6khx-1704757167738"></a>·分布式计算:将任务分布到多个节点上，以充分利用计算资源。
+<a name="utsc-1740486111013"></a>将任务分布到多个节点上，以充分利用计算资源。
 
 <a name="wnfy-1704756775272"></a>**2.负载均衡**
 
 <a name="h6nf-1704756891918"></a>**.负载均衡**
 
+<a name="k6uy-1740486122127"></a>使用负载均衡器分配请求到多个服务器，确保各个服务器的负载均衡。
+
 <a name="c8zr-1704756894402"></a>**.水平扩展**
 
-·负载均衡器:使用负载均衡器分配请求到多个服务器，确保各个服务器的负载均衡。
-
-<a name="o1d2-1704757209512"></a>·水平扩展:可以通过增加服务器数量来水平扩展系统，以支持更多的并发请求。
+<a name="qpxr-1740486125522"></a>可以通过增加服务器数量来水平扩展系统，以支持更多的并发请求。
 
 <a name="wxjk-1704756782840"></a>**3.数据库设计**
 
 <a name="lxca-1704756910837"></a>**.读写分离**
 
+<a name="yb7u-1740486162326"></a>使用读写分离来分担数据库的读写负载，提高数据库性能。
+
 <a name="p7d2-1704756922362"></a>**.数据库分片**
+
+<a name="7xd0-1740486167895"></a>将数据库分片，使数据分布在多个节点上，降低单—数据库的压力
 
 <a name="hxjt-1704756963988"></a>**.缓存**
 
-·读写分离:使用读写分离来分担数据库的读写负载，提高数据库性能。
-
-·数据库分片:将数据库分片，使数据分布在多个节点上，降低单—数据库的压力
-
-<a name="yymm-1704757244191"></a>·缓存:使用缓存来减轻数据库负担，提高数据读取速度。
+<a name="5tt1-1740486171130"></a>使用缓存来减轻数据库负担，提高数据读取速度。
 
 <a name="iivs-1704756788012"></a>**4.缓存优化**
 
 <a name="cvui-1704756971791"></a>**.分布式缓存**
 
+<a name="yfkk-1740486276871"></a>使用分布式缓存，如Redis或Memcached，以提高数据的读取速度。
+
 <a name="ysly-1704756979122"></a>**.本地缓存**
+
+<a name="mbvk-1740486281491"></a>使用分布式缓存，如Redis或Memcached，以提高数据的读取速度。
 
 <a name="rqwj-1704756986363"></a>**.缓存预热**
 
-·分布式缓存:使用分布式缓存，如Redis或Memcached，以提高数据的读取速度。
-
-·本地缓存:在服务端使用本地缓存，减少对数据库或远程服务的请求次数。
-
-<a name="vkcq-1704757254304"></a>·缓存预热:在系统启动时，预先加载一部分热门数据到缓存中，提高缓存命中率。
+<a name="xixf-1740486285393"></a>使用分布式缓存，如Redis或Memcached，以提高数据的读取速度。
 
 <a name="so9h-1704756800253"></a>**5.消息队列**
 
 <a name="sxlo-1704756996000"></a>**.异步处理**
 
+<a name="frwn-1740486292901"></a>使用消息队列进行异步处理，将一些非实时关键路径的任务放入队列中处理，减轻服务器负担。
+
 <a name="llm2-1704757002994"></a>**.削峰填谷**
 
-·异步处理:使用消息队列进行异步处理，将一些非实时关键路径的任务放入队列中处理，减轻服务器负担。
-
-<a name="99fz-1704757286906"></a>·削峰填谷:缓解系统压力，通过消息队列实现请求的削峰填谷，防止瞬时大量请求导致系统崩溃。
+<a name="xsjz-1740486297401"></a>缓解系统压力，通过消息队列实现请求的削峰填谷，防止瞬时大量请求导致系统崩溃。
 
 <a name="n39o-1704756805232"></a>**6.分布式事务**
 
 <a name="5bhj-1704757017700"></a>**.两阶段提交**
 
+<a name="mcmo-1740486306830"></a>缓解系统压力，通过消息队列实现请求的削峰填谷，防止瞬时大量请求导致系统崩溃。
+
 <a name="becc-1704757028036"></a>**.补偿事务**
 
-两阶段提交（2PC):在分布式环境中，确保事务的一致性，可以使用两阶段提交协议。
-
-<a name="qset-1704757299753"></a>·补偿事务:使用补偿事务机制，处理在分布式环境中的异常情况。
+<a name="yvap-1740486310805"></a>使用补偿事务机制，处理在分布式环境中的异常情况。
 
 <a name="wgkk-1704756813448"></a>**7.高可用和容错**
 
 <a name="akwz-1704757035393"></a>**.多地域部署**
 
+<a name="v3gj-1740486346639"></a>在不同地理位置部署系统，提高系统的可用性。
+
 <a name="3nxv-1704757055271"></a>**.设计容错**
+
+<a name="2zqq-1740486353828"></a>使用容错设计，确保系统在部分节点或服务失效时能够继续提供服务。
 
 <a name="g3xx-1704757371028"></a>**1. 熔断限流**
 
 <a name="jafy-1704757374368"></a>**2. 多节点服务**
 
-·多地域部署:在不同地理位置部署系统，提高系统的可用性。
-
-<a name="h6bn-1704757326243"></a>·容错设计:使用容错设计，确保系统在部分节点或服务失效时能够继续提供服务。
-
 <a name="ilyo-1704756820772"></a>**8.监控和性能调优**
 
 <a name="kpwq-1704757064566"></a>**.实时监控**
 
+<a name="9rcg-1740486376671"></a>使用监控系统实时监测系统性能，对系统进行及时调整。
+
 <a name="shf4-1704757066453"></a>**.性能测试**
 
-·实时监控:使用监控系统实时监测系统性能，对系统进行及时调整。
-
-<a name="lkos-1704757433031"></a>性能测试:定期进行性能测试，模拟高并发情况，找出系统的瓶颈并进行优化。
+<a name="m3nb-1740486388462"></a>定期进行性能测试，模拟高并发情况，找出系统的瓶颈并进行优化。
 
 <a name="2pry-1704756830245"></a>**9.安全性设计**
 
 <a name="pkiw-1704757078583"></a>**.防御性编程**
 
+<a name="o29a-1740486421894"></a>编写安全的代码，防范SQL注入、XSS攻击等。
+
 <a name="g4l1-1704757084924"></a>**.访问控制**
 
-·防御性编程:编写安全的代码，防范SQL注入、XSS攻击等。
-
-<a name="g9ef-1704757459182"></a>·访问控制:对系统的访问进行严格控制，避免未经授权的访问。
+<a name="razq-1740486426288"></a>对系统的访问进行严格控制，避免未经授权的访问。
 
 <a name="1tsd-1704756838192"></a>**10.水平扩展**
 
 <a name="r1dd-1704757092061"></a>**.自动化部署**
 
+<a name="z6ow-1740486438933"></a>设计自动化扩展机制，根据系统负载自动增减节点。
+
 <a name="7mhk-1704757104117"></a>**.云服务**
 
-·自动化扩展:设计自动化扩展机制，根据系统负载自动增减节点。
-
-<a name="g3qv-1704757477668"></a>·云服务:使用云服务提供商的弹性计算能力，根据需求调整计算资源。
+<a name="roet-1740486444466"></a>设计自动化扩展机制，根据系统负载自动增减节点。
 
 <a name="rpxb-1677787447005"></a>**高并发性能指标**
 
-<a name="klnv-1704761369323"></a>**QPS(每秒请求)**
+<a name="klnv-1704761369323"></a>**QPS(每秒查询)**
 
 <a name="zvlz-1704761369324"></a>**TPS(每秒事务)**
 
@@ -955,9 +985,87 @@
 
 2、如果一台机器的QPS是58，需要几台机器（cpu瓶颈）来支持？ ---得分析性能瓶颈，例如是CPU还是数据库。
 
-<a name="02ut-1704761377369"></a>139 / 58 = 3 
+139 / 58 = 3 
 
-<a name="nuln-1709310472128"></a><a name="ysmj-1709309531982"></a>**(原子操作)并发编程中保证数据一致性/安全的方法**
+
+‌互联网企业‌：如淘宝业务，TPS可以达到每秒数千到数万次事务‌1。
+
+‌金融企业‌：通常要求每秒处理数百到数千次事务‌1。
+
+‌保险企业‌：要求每秒处理数百次事务‌1。
+
+‌制造业‌：要求每秒处理数百次事务‌1。
+
+mysql QPS:2000  TPS:1000  入门级4C8G 100GSSD盘
+
+redis TPS:8w  QPS:10w     标准版 2G        evergrand 1G -8G集群版8分片 
+
+峰值时间：80%集中访问在20% 时间里
+
+则单台mysql  支持43,200,000  每日4千三百万流量
+
+<a name="02ut-1704761377369"></a>每天200w人坐飞机
+
+<a name="nuln-1709310472128"></a>软件测试，性能测试
+
+1、交易响应时间
+
+不同行业不同业务可接受的响应时间是不同的，一般情况，对于在线实时交易：
+
+互联网企业：500毫秒以下，例如淘宝业务10毫秒左右。
+
+金融企业：1秒以下为佳，部分复杂业务3秒以下。
+
+保险企业：3秒以下为佳。
+
+制造业：5秒以下为佳。
+
+2、系统处理能力
+
+一般情况下，用以下几个指标来度量：
+
+HPS(Hits Per Second)：每秒点击次数，单位是次/秒。
+
+TPS(Transaction per Second)：系统每秒处理交易数，单位是笔/秒。
+
+此指标是衡量系统处理能力非常重要的指标，越大越好，根据经验，一般情况下：
+
+金融行业：1000TPS~9000TPS
+
+保险行业：100TPS~1000TPS
+
+制造行业：10TPS~50TPS
+
+互联网电子商务：10000TPS~100000TPS,例如天猫5万TPS
+
+互联网中型网站：100TPS~500TPS
+
+互联网小型网站：50TPS～100TPS
+
+3、并发用户数
+
+可以选取高峰时刻，在一定时间内使用系统的人数，这些人数认为属于在线用户数，并发
+
+用户数取10%就可以了，例如在半个小时内，使用系统的用户数为10000，那么取10%作
+
+为并发用户数基本就够了。
+
+总结:
+
+系统的性能由TPS决定，跟并发用户数没有多大关系。在同样的TPS下，可以由不同的用
+
+户数去压（通过加思考时间设置）。
+
+系统的最大TPS是一定的（在一个范围内），但并发用户数不一定，可以调整。
+
+建议性能测试的时候，不要设置过长的思考时间，以最坏的情况下对服务器施压。
+
+一般情况下，大型系统（业务量大、机器多）做压力测试，5000个用户并发就够了，中小
+
+<a name="sdo6-1742051725473"></a>型系统做压力测试，1000个用户并发就足够了。
+
+
+<a name="ulmp-1742051722238"></a><a name="gehw-1742051722439"></a><a name="ysmj-1709309531982"></a>**(原子操作)并发编程中保证数据一致性/安全的方法**
 
 <a name="gawc-1709307342094"></a>在并发编程中，为了保证数据安全（**即避免数据竞争和并发访问导致的不确定行为**），可以采取以下一些措施：
 
@@ -1202,7 +1310,411 @@ public class RedisDistributedLock {
 
 <a name="qzbb-1709307350196"></a>以上措施都可以在并发编程中用于保证数据安全，具体选择取决于应用场景、性能需求和编程语言特性。
 
-<a name="qy4e-1709307703527"></a><a name="nyrv-1709307688718"></a>**===系统架构设计师===**
+<a name="qy4e-1709307703527"></a><a name="xgtf-1742056495173"></a>**===系统架构设计case===**
+
+各大厂的待遇还是比较透明的，虽然职级名称五花八门，但基本上都能对应到具体的级别。对于大多数人来说，基本上可以分为四个等级。以下是以谷歌和阿里为例的对比：
+
+初级（0-2年工作经验）：谷歌的L3级别，年薪在17-20万美元之间；阿里的P5级别，年薪在30-40万元之间。
+
+中级（3-5年工作经验）：谷歌的L4级别，年薪在20-30万美元之间；阿里的P6级别，年薪在45-70万元之间。
+
+高级（6-8年工作经验）：谷歌的L5级别，年薪在30-45万美元之间；阿里的P7级别，年薪在60-100万元之间。
+
+资深（8年以上工作经验）：谷歌的L6级别，年薪在50万美元以上；阿里的P8级别，年薪在120万元以上。这个级别的员工不仅需要丰富的经验，还需要具备突出的能力和需求。
+
+跳槽与待遇差异 🌐
+
+<a name="afvl-1742052119173"></a>如果只看每一级的待遇，美国大厂的优势明显。但一般来说，跳槽回国后职级会提升一级，国内员工跳出来后待遇会下降一级（近几年国内发展迅速，五年前跳回国一般能加两级）。所以，L4通常对标P7，L5对标P8，换算成税后购买力，两边待遇差距其实不大。至于其他因素，那就见仁见智了。
+
+<a name="s690-1742056496399"></a>**System Design Interview : A Step-By-Step Guide from ByteByteGo**
+
+<a name="3bkc-1742052889248"></a><a name="3tkz-1742056496400"></a>**Step1 Understand the problem and establish design scope 理解问题并建立设计边界  5m**
+
+open ending 考验思考和关注重点
+
+1\.明白需求
+
+需求背景，用户，和功能。
+
+\---------------
+
+2\.功能和性能 通常是关注的重点
+
+3\.非功能性需求  可靠性，可扩展性，可维护性，通常是高阶要求，
+
+但是不会直接提出来，自己要考虑到
+
+\-----------
+
+4\.列出功能特性列表
+
+<a name="rk7m-1742052186066"></a>以及一些重要的非功能性需求，规模，可用性，可靠性，延时要求，流量
+
+<a name="gtpd-1742052596883"></a>**Step2 Propse high-level design and get bye-in  提出高层设计并获得认同  20m**
+
+1\.通常自上而下设计
+
+列出功能API restful 
+
+2\.高级设计图UML end to end 系统设计图
+
+一般不需要特别指定数据库，会显得浅显。
+
+\--------------------------
+
+制定高层设计时，保留一份讨论要点列表，供后面讨论
+
+.数据库规模
+
+.高并发
+
+.失败场景
+
+抵制过早挖掘过多细节的诱惑，太多细节会挖坑。
+
+3\.高层设计最后一步：数据模型
+
+数据访问模式 和 读写比列
+
+<a name="f7xs-1742052596882"></a>数据库类型，索引类型
+
+<a name="5bql-1742052596885"></a>**Step3 Design deep dive  设计深潜，深入设计 15m**
+
+1\.和面试官密切合作，决定深入讨论的内容
+
+越高级非功能性需求越显得重要
+
+.安全  一致性，新鲜度(最新数据)，精确性，性能，规模  
+
+open ending
+
+2\. 给出至少两种解决方案
+
+\----------------------------
+
+面试官会给肢体语言表达某些设计不满，要抓住这些线索并确保解决非常重要
+
+列出特定解决方案，并询问是否有问题或疑虑
+
+Why Cassandra  
+
+.开源
+
+.处理大规模写入
+
+.高规模
+
+3\.讨论并trade-off权衡方案的优缺点
+
+4\.选一种方案和面试官讨论
+
+<a name="kjrz-1742052588390"></a>PS:向DDIA那种先解决，后缺点，再引入另一种方案，然后对比的方式更优。
+
+<a name="1jtz-1742052576906"></a>**Step4 Wrap up 总结 5m**
+
+花几分钟总结
+
+<a name="bd5f-1742052574211"></a>简洁突出重点。
+
+<a name="vtzc-1742056496401"></a>**Hotel Booking   airbnb**
+
+<a name="mzcn-1742056496402"></a>**酒店预订**
+
+<a name="y2i3-1742055948351"></a>call out 提出重点
+
+<a name="cagn-1742055921784"></a>功能性需求
+
+<a name="pv5g-1742055929199"></a>非功能性需求
+
+<a name="mnho-1742055909381"></a>数据
+
+HOTELRESERVATION
+
+RESOURCES:
+
+"Ticketmaster" in grokking
+
+-."Hotel·Reservation"·inAlexXu·Book·II
+
+-."Digital·Wallet"-in·Alex-Xu·Book·II
+
+-includes·a·chunkabout·Raft
+
+--If·you·wantto really dive deep:
+
+:-Spanner·whitepaper:-https://notes.stephenholiday.com/Spanner.pdf
+
+--Chubby·whitepaper:·https://research.google/pubs/pub27897/
+
+-Raftwhitepaper:https://notes.stephenholiday.com/Raft.pdf
+
+-other similar-problems:
+
+-airlineticketing
+
+-movie-ticketing
+
+."design·amazon.com"
+
+-."design airbnb"
+
+
+
+CALL·OUTS:
+
+--This problem·seems to·be·commonly asked·by-Square
+
+-2Pc,distributed-commits,sagas,threadcontention
+
+-some resources just-cop·out and·use·PostgresQL and·one machine
+
+FUNCTIONAL·REQUIREMENTS:
+
+-Customers can-view-available rooms
+
+-Customers-can-make-a·reservation
+
+-Thefront-desk people have-reservation info-for-checking peoplein
+
+-preventing double-booking vs..10% over-booking
+
+-Alex-Xu-designed·this for·10%.overbooking
+
+-double-booking/·over-booking is actually illegal in the airline industry
+
+
+NON-FUNCTIONAL·REQUIREMENTS:
+
+-High·Consistency; no stale-data here.
+
+OUT-OF-SCOPE:
+
+-Dynamic·Pricing
+
+-The rest of·how-the-check in process works for when you·actually arrive
+
+-external·payment processing-service-(stripe/paypal/visa/mastercard)
+
+NUMBERS:
+
+-3B·page views per month
+
+<a name="i6ri-1742055651844"></a>-30M·reservations per·month
+
+<a name="nxyg-1742056496403"></a><a name="x7xb-1742056496404"></a>**google L5 （约等于P7P8）设计一个分布式数据库架构(和DDIA上解决方案基本一致)**
+
+<a name="sfrt-1742056496405"></a>**mycat 和 shardingspher的实现思想**
+
+DESIGN-A DISTRIBUTED DATABASE
+
+RESOURCES:
+
+-taken ·from-somebody's real -google system-design-interview
+
+REQUIREMENTS:
+
+--distributed database
+
+-specify stuff like isolation- level, transactions support,consistency-level
+
+variations:
+
+\1) Read-heavy
+
+\2) write-heavy
+
+\3) Total ordering and heavy writes for ticketmaster/"flashsale"
+
+Most use cases are read-heavy
+
+\------
+
+snapshot isolation
+
+multi-version concurrency control 
+
+use-some- "version-vectors"?
+
+Does it·make sense to have a separate coordinator for all of the shards?-(Like ZooKeeper)
+
+or-does the: request - router - handle coordinating the-shards?
+
+\==========================
+
+write-heavy or read-heavy
+
+read-heavy
+
+B-tree
+
+single-leader
+
+DynamoDB/spanner style 
+
+snapshot isolation
+
+multi-version concurrency control
+
+use some "version vectors""?
+
+aim for sequential consistency
+
+write-heavy
+
+LSM-tree 
+
+leaderless
+
+cassandra/riak/scylla styled
+
+cosmos DB is also some inspiration  here
+
+probably still-snapshot isolation & multi-version concurrency control
+
+( requestrouter stuff might be -different)
+
+just-aim for causal-consistency,
+
+and do risk & cosmos DB's write conflict resolution specifying thing
+
+ticke tmaster/distributed linked list/"flash sale" oriented DB write-heavy and total ordering is important)
+
+meaning aim for sequential consistency
+
+BUT,we're super write-heavy
+
+single-leader
+
+LSM-tree
+
+<a name="fug2-1707454709063"></a>request router is likely going to stay looking like theread-heavy approach
+
+<a name="zvmo-1742056496406"></a>**.what is total ordering(ordering first 100 custormer)**
+
+Can- you explain -whats total ordering use case briefly?
+
+ordering all the records of the database, for example: flashsales on amazon.com  - first 100 customers will be luckers to get free iphone;  
+
+fairness"
+
+I am going to be using  "weak fairness"
+
+which is the difference between"sequential consistency" and"linearizability - seattle to your IDC 100km, be later 5 sec than others which approach your IDC;
+
+there's actually multiple there.jepsen.io/consistency
+
+------by the way----
+
+distributed system node serizability rank
+
+https://jepsen.io/consistency  
+
+when network down
+
+Total Available
+
+Sticky Available
+
+<a name="qzxn-1707454693080"></a>Unavailable
+
+<a name="d32b-1742056496407"></a>**.why single leader()**
+
+why single-leader?
+
+simplifies write conflicts
+
+concurrent-writes are imposssible when PostgreSQL is set to serializable-isolation-level
+
+zookeeper -and- etcd or-strongly consistent- KV storesetcd is used by kubernetes internally
+
+<a name="llq0-1707455190492"></a>aim for sequential consistency
+
+<a name="5ff1-1742056496408"></a>**.request router**
+
+\- my opinion is that it is likely mycat;
+
+"request router"
+
+`             `strong consistent kv store(cassadra)
+
+`                             `|
+
+client   -        "request router"    -    (partion1) postgreSQL shard(leader node)  -  sychronus read raplica(follower) -gossinping  read raplic
+
+`                                                `|
+
+`                                           `(partion2) postreSQL shard(leader)     
+
+
+
+Strong Read Consistency  :  do request to leader, leader will expi
+
+<a name="tuet-1707455232935"></a>Eventual Consistyency  : do request to  raplica
+
+<a name="d2f0-1742056496409"></a>**.variations**
+
+<a name="ckll-1742056496410"></a>**1.Failover handing**
+
+<a name="ko0c-1742056496411"></a>**2.Reblancing after new node added**
+
+<a name="gmhh-1742056496412"></a>**3.Leaderless for heavy write-shard**
+
+<a name="xngs-1742056496413"></a>**4.TicketMasler (and total ordering is necessary**
+
+variations 1-Failover handling
+
+`    `1.detect the failur
+
+`        `From "Database leader->"phi accruar
+
+`    `2.do the leader election and switch over to the new leader
+
+`    `1.detect the failur
+
+`    `2.promote The syrchronous read replica(this is our leader election we're doing the 'ring') in the kv store
+
+variation 2 reblancing after new node added
+
+`    `1.start gossiping data over to the new machines
+
+`    `2.the machines become sychronuse read replica 
+
+`        `for the partition that they should be promoted to 'leader' of
+
+`    `3.promotes one of the machines to 'leader' (in kv store)
+
+`    `4.it is now being router write request;
+
+variation 3 leaderless for heavy write (No total ordering support only causal consistency)
+
+`    `write scenario: wirte to machine 1 ,machine 2
+
+`        `gossiping -> concurrent write is detected!! now we have to do a write conflict resolution
+
+`    `under Last-Write-Win. you just take the write from machine 2 .and that becomes the value on both machines(cassandre dose this)
+
+`    `with  cosmosDB and (IIRC) Riak, you can specify the conflict resolution strategy instead of the defualt of LWW
+
+
+
+FOR-THIS-SCENARIO,
+
+basically just follow Variation· 1, but-shard the hell out of.it( fewer read: replicas necessary)
+
+and use· LSM-trees
+
+and - use the serializable isolation level on each leader node
+
+Variation 4-TicketMasler (and total ordering is necessary)->just copy variation 1 but with tollowing changes
+
+-use LSMM-trees
+
+\- fewer read replicas necessary- shard the hell out of it
+
+<a name="m8yp-1706969251706"></a>- seriazation isolation level
+
+
+<a name="6fub-1742056496414"></a><a name="puhw-1742056495352"></a><a name="nyrv-1709307688718"></a>**===系统架构设计师===**
 
 <a name="mpwu-1704949756608"></a>**系统工程与信息系统基础**
 
@@ -2514,217 +3026,5 @@ RFID的基本组成部分通常包括:标签、阅读器、天线。
 
 <a name="824i-1706275570096"></a>√基础设施即服务(laaS)   -硬件
 
-<a name="1rnn-1706941312871"></a>**===系统架构设计case===**
-
-<a name="nm5q-1706969255961"></a>**google L5设计一个分布式数据库架构**
-
-DESIGN-A DISTRIBUTED DATABASE
-
-RESOURCES:
-
--taken ·from-somebody's real -google system-design-interview
-
-REQUIREMENTS:
-
---distributed database
-
--specify stuff like isolation- level, transactions support,consistency-level
-
-variations:
-
-\1) Read-heavy
-
-\2) write-heavy
-
-\3) Total ordering and heavy writes for ticketmaster/"flashsale"
-
-Most use cases are read-heavy
-
-\------
-
-snapshot isolation
-
-multi-version concurrency control 
-
-use-some- "version-vectors"?
-
-Does it·make sense to have a separate coordinator for all of the shards?-(Like ZooKeeper)
-
-or-does the: request - router - handle coordinating the-shards?
-
-\==========================
-
-write-heavy or read-heavy
-
-read-heavy
-
-B-tree
-
-single-leader
-
-DynamoDB/spanner style 
-
-snapshot isolation
-
-multi-version concurrency control
-
-use some "version vectors""?
-
-aim for sequential consistency
-
-write-heavy
-
-LSM-tree 
-
-leaderless
-
-cassandra/riak/scylla styled
-
-cosmos DB is also some inspiration  here
-
-probably still-snapshot isolation & multi-version concurrencycontrol
-
-( requestrouter stuff might be -different)
-
-just-aim for causal-consistency,
-
-and do risk & cosmos DB's write conflict resolution specifying thing
-
-ticketmaster/distributed linked list/"flash sale" oriented DBwrite-heavy and total ordering is important)
-
-meaning aim for sequential consistency
-
-BUT,we're super write-heavy
-
-single-leader
-
-LSM-tree
-
-
-<a name="fug2-1707454709063"></a>request router is likely going to stay looking like theread-heavy approach
-
-<a name="g7yu-1707229908505"></a>**.what is total ordering(ordering first 100 custormer)**
-
-Can- you explain -whats total ordering use case briefly?
-
-ordering all the records of the database, for example: flashsales on amazon.com  - first 100 customers will be luckers to get free iphone;  
-
-fairness"
-
-I am going to be using  "weak fairness"
-
-which is the difference between"sequential consistency" and"linearizability - seattle to your IDC 100km, be later 5 sec than others which approach your IDC;
-
-there's actually multiple there.jepsen.io/consistency
-
-------by the way----
-
-distributed system node serizability rank
-
-https://jepsen.io/consistency  
-
-when network down
-
-Total Available
-
-Sticky Available
-
-<a name="qzxn-1707454693080"></a>Unavailable
-
-<a name="ebxf-1707230056989"></a>**.why single leader()**
-
-why single-leader?
-
-simplifies write conflicts
-
-concurrent-writes are imposssible when PostgreSQL is set to serializable-isolation-level
-
-zookeeper -and- etcd or-strongly consistent- KV storesetcd is used by kubernetes internally
-
-<a name="llq0-1707455190492"></a>aim for sequential consistency
-
-<a name="ttmg-1707230034624"></a>**.request router**
-
-\- my opinion is that it is likely mycat;
-
-"request router"
-
-`             `strong consistent kv store(cassadra)
-
-`                             `|
-
-client   -        "request router"    -    (partion1) postgreSQL shard(leader node)  -  sychronus read raplica(follower) -gossinping  read raplic
-
-`                                                `|
-
-`                                           `(partion2) postreSQL shard(leader)     
-
-
-
-Strong Read Consistency  :  do request to leader, leader will expi
-
-<a name="tuet-1707455232935"></a>Eventual Consistyency  : do request to  raplica
-
-<a name="aftd-1707229925082"></a>**.variations**
-
-<a name="uk2k-1707457488655"></a>**1.Failover handing**
-
-<a name="btbd-1707457496651"></a>**2.Reblancing after new node added**
-
-<a name="moaq-1707457524278"></a>**3.Leaderless for heavy write-shard**
-
-<a name="wyvq-1707458882987"></a>**4.TicketMasler (and total ordering is necessary**
-
-variations 1-Failover handling
-
-1\.detect the failur
-
-`    `From "Database leader->"phi accruar
-
-2\.do the leader election and switch over to the new leader
-
-1\.detect the failur
-
-2\.prmote The syrchronous read replica(this is our leader election we're doing the 'ring') in the kv store
-
-variation 1 reblancing after new node added
-
-1\.start gossiping data over to the new machines
-
-2\.the machines become sychronuse read replica 
-
-`    `for the partition that they should be promoted to 'leader' of
-
-3\.promotes one of the machines to 'leader' (in kv store)
-
-4\.it is now being router write request;
-
-variation 2 leaderless for heavy write (No total ordering support only causal consistency)
-
-write scenario: wirte to machine 1 ,machine 2
-
-`    `gossiping -> concurrent write is detected!! now we have to do a write conflict resolution
-
-`    `under Last-Write-Win. you just take the write from machine 2 . and that becomes the value on both machines(cassandre dose this)
-
-`    `with  cosmosDB and (IIRC) Riak, you can specify the conflict resolution strategy instead of the defualt of LWW
-
-
-
-FOR-THIS-SCENARIO,
-
-basically just follow Variation· 1, but-shard the hell out of.it( fewer read: replicas necessary)
-
-and use· LSM-trees
-
-and - use the serializable isolation level on each leader node
-
-Variation 3-TicketMasler (and total ordering is necessary)->just copy variation 1 but with tollowing changes
-
--use LSMM-trees
-
-\- fewer read replicas necessary- shard the hell out of it
-
-<a name="m8yp-1706969251706"></a>- seriazation isolation level
 
 
